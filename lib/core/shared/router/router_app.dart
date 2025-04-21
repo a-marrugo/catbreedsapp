@@ -1,5 +1,5 @@
-import 'package:catbreedsapp/core/presentation/pages/base_page.dart';
 import 'package:catbreedsapp/core/shared/router/router_constant.dart';
+import 'package:catbreedsapp/features/cat_breeds/presentation/pages/cat_breed_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,13 +10,13 @@ import 'package:go_router/go_router.dart';
 class RouterApp {
   /// Router configuration
   final goRouter = GoRouter(
-    initialLocation: RouteConstants.splashPage.path,
+    initialLocation: RouteConstants.catBreedListPage.path,
     routes: [
       GoRoute(
-        path: RouteConstants.splashPage.path,
-        builder: (context, state) => const BasePage(child: SizedBox()),
+        path: RouteConstants.catBreedListPage.path,
+        builder: (context, state) => const CatBreedListPage(),
       ),
-      GoRoute(
+      /*GoRoute(
         path: RouteConstants.signUpPage.path,
         pageBuilder: (context, state) => CustomTransitionPage(
           key: state.pageKey,
@@ -28,7 +28,7 @@ class RouterApp {
             );
           },
         ),
-      ),
+      ),*/
     ],
   );
 
