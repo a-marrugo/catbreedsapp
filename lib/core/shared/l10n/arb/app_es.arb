@@ -1,4 +1,5 @@
 {
     "@@locale": "es",
-    "home": "Inicio"
+    "home": "Inicio",
+    "appName": "Cat Breeds"
 }

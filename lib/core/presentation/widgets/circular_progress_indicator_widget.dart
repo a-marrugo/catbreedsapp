@@ -138,9 +138,9 @@ class _AdnCircularProgressIndicatorPainter extends CustomPainter {
   const _AdnCircularProgressIndicatorPainter({
     required this.backgroundColor,
     required this.valueColor,
-    this.value,
     required this.animationValue,
     required this.textDirection,
+    this.value,
   });
 
   final Color backgroundColor;
@@ -381,7 +381,6 @@ class _AdnCircularProgressIndicatorState
 
 class _CircularProgressIndicatorWidgetPainter extends CustomPainter {
   _CircularProgressIndicatorWidgetPainter({
-    this.backgroundColor,
     required this.valueColor,
     required this.value,
     required this.headValue,
@@ -389,6 +388,7 @@ class _CircularProgressIndicatorWidgetPainter extends CustomPainter {
     required this.offsetValue,
     required this.rotationValue,
     required this.strokeWidth,
+    this.backgroundColor,
   })  : arcStart = value != null
             ? _startAngle
             : _startAngle +
