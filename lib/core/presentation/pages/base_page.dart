@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:catbreedsapp/core/presentation/styles/app_palette.dart';
-import 'package:catbreedsapp/core/presentation/widgets/circular_progress_indicator_widvet.dart';
+import 'package:catbreedsapp/core/presentation/widgets/circular_progress_indicator_widget.dart';
 import 'package:flutter/material.dart';
 
 /// A base page widget that provides a consistent layout structure
