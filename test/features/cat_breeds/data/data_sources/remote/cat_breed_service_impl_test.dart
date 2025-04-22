@@ -1,10 +1,12 @@
 import 'package:catbreedsapp/core/data/https/exception.dart';
+import 'package:catbreedsapp/core/data/https/status_code.dart';
+import 'package:catbreedsapp/features/cat_breeds/data/data_sources/data_sources_data_const.dart';
 import 'package:catbreedsapp/features/cat_breeds/data/data_sources/remote/cat_breed_service.dart';
+import 'package:catbreedsapp/features/cat_breeds/data/dto/cat_breed_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-// Mock class for Dio
 class MockDio extends Mock implements Dio {}
 
 void main() {
@@ -14,96 +16,141 @@ void main() {
   setUp(() {
     mockDio = MockDio();
     service = CatBreedServiceImpl(mockDio);
-
     registerFallbackValue(Uri());
   });
 
   group('CatBreedServiceImpl', () {
-    test('should fetch cat breeds successfully', () async {
+    test('should fetch cat breeds and resolve image URLs', () async {
       // Arrange
-      final responseData = [
+      const page = 1;
+      const limit = 2;
+
+      final mockCatBreedsResponse = [
         {
           'id': '1',
-          'name': 'Persian',
-          'reference_image_id': 'image_url_1',
-          'temperament': 'Gentle',
-          'origin': 'Iran',
-          'description': 'A long-haired breed.',
-          'life_span': '12 - 17',
-          'wikipedia_url': 'https://en.wikipedia.org/wiki/Persian_(cat)',
+          'name': 'Breed 1',
+          'reference_image_id': 'image1',
         },
         {
           'id': '2',
-          'name': 'Siamese',
-          'reference_image_id': 'image_url_2',
-          'temperament': 'Playful',
-          'origin': 'Thailand',
-          'description': 'A short-haired breed.',
-          'life_span': '10 - 15',
-          'wikipedia_url': 'https://en.wikipedia.org/wiki/Siamese_(cat)',
+          'name': 'Breed 2',
+          'reference_image_id': 'image2',
         },
       ];
 
-      final response = Response<List<dynamic>>(
-        data: responseData,
-        statusCode: 200,
-        requestOptions: RequestOptions(),
-      );
+      final mockImageResponse1 = {'url': 'https://example.com/image1.jpg'};
+      final mockImageResponse2 = {'url': 'https://example.com/image2.jpg'};
 
-      when(() => mockDio.getUri<List<dynamic>>(any()))
-          .thenAnswer((_) async => response);
-
-      // Act
-      final result = await service.getCatBreeds(page: 1, limit: 10);
-
-      // Assert
-      expect(result.data.length, responseData.length);
-      expect(result.data[0].id, responseData[0]['id']);
-      expect(result.data[0].name, responseData[0]['name']);
-      verify(() => mockDio.getUri<List<dynamic>>(any())).called(1);
-    });
-
-    test('should throw RestApiException when status code is not 200', () async {
-      // Arrange
-      final response = Response<List<dynamic>>(
-        data: null,
-        statusCode: 404,
-        requestOptions: RequestOptions(),
-        statusMessage: 'Not Found',
-      );
-
-      when(() => mockDio.getUri<List<dynamic>>(any()))
-          .thenAnswer((_) async => response);
-
-      // Act
-      final call = service.getCatBreeds;
-
-      // Assert
-      expect(
-        () => call(page: 1, limit: 10),
-        throwsA(isA<RestApiException>()),
-      );
-      verify(() => mockDio.getUri<List<dynamic>>(any())).called(1);
-    });
-
-    test('should throw DioException on Dio error', () async {
-      // Arrange
-      when(() => mockDio.getUri<List<dynamic>>(any())).thenThrow(
-        DioException(
+      // Mock the response for fetching the list of cat breeds
+      when(() => mockDio.getUri<List<dynamic>>(any())).thenAnswer(
+        (_) async => Response(
+          data: mockCatBreedsResponse,
+          statusCode: StatusCode.ok,
           requestOptions: RequestOptions(),
-          type: DioExceptionType.connectionTimeout,
+        ),
+      );
+
+      // Mock the response for fetching the image URL for image1
+      when(
+        () => mockDio.getUri<Map<String, dynamic>>(
+          Uri.https(
+            CatBreedServiceDataConst.api,
+            '/v1/images/image1',
+          ),
+        ),
+      ).thenAnswer(
+        (_) async => Response(
+          data: mockImageResponse1,
+          statusCode: StatusCode.ok,
+          requestOptions: RequestOptions(),
+        ),
+      );
+
+      // Mock the response for fetching the image URL for image2
+      when(
+        () => mockDio.getUri<Map<String, dynamic>>(
+          Uri.https(
+            CatBreedServiceDataConst.api,
+            '/v1/images/image2',
+          ),
+        ),
+      ).thenAnswer(
+        (_) async => Response(
+          data: mockImageResponse2,
+          statusCode: StatusCode.ok,
+          requestOptions: RequestOptions(),
         ),
       );
 
       // Act
-      final call = service.getCatBreeds;
+      final result = await service.getCatBreeds(page: page, limit: limit);
 
       // Assert
+      expect(result.data, isA<List<CatBreedDTO>>());
+      expect(result.data.length, 2);
+      expect(result.data[0].imageUrl, 'https://example.com/image1.jpg');
+      expect(result.data[1].imageUrl, 'https://example.com/image2.jpg');
+    });
+
+    test('should throw RestApiException when fetching cat breeds fails',
+        () async {
+      // Arrange
+      const page = 1;
+      const limit = 2;
+
+      when(() => mockDio.getUri<List<dynamic>>(any())).thenAnswer(
+        (_) async => Response(
+          statusCode: StatusCode.badRequest,
+          requestOptions: RequestOptions(),
+        ),
+      );
+
+      // Act & Assert
       expect(
-        () => call(page: 1, limit: 10),
+        () => service.getCatBreeds(page: page, limit: limit),
         throwsA(isA<RestApiException>()),
       );
-      verify(() => mockDio.getUri<List<dynamic>>(any())).called(1);
+    });
+
+    test('should return null when fetching image URL fails', () async {
+      // Arrange
+      const imageId = 'image1';
+      final mockCatBreedsResponse = [
+        {
+          'id': '1',
+          'name': 'Breed 1',
+          'reference_image_id': 'image1',
+        }
+      ];
+
+      // Mock the response for fetching the list of cat breeds
+      when(() => mockDio.getUri<List<dynamic>>(any())).thenAnswer(
+        (_) async => Response(
+          data: mockCatBreedsResponse,
+          statusCode: StatusCode.ok,
+          requestOptions: RequestOptions(),
+        ),
+      );
+
+      when(
+        () => mockDio.getUri<Map<String, dynamic>>(
+          Uri.https(
+            CatBreedServiceDataConst.api,
+            '/v1/images/$imageId',
+          ),
+        ),
+      ).thenAnswer(
+        (_) async => Response(
+          statusCode: StatusCode.badRequest,
+          requestOptions: RequestOptions(),
+        ),
+      );
+
+      // Act
+      final result = await service.getCatBreeds(page: 1, limit: 1);
+
+      // Assert
+      expect(result.data[0].imageUrl, isNull);
     });
   });
 }

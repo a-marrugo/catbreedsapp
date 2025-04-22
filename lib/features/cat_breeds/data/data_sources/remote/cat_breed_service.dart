@@ -52,7 +52,17 @@ class CatBreedServiceImpl implements CatBreedService {
                 .toList() ??
             [];
 
-        return BaseDataDTO<List<CatBreedDTO>>(data: catBreedsDTO);
+        final updatedCatBreedsDTO = await Future.wait(
+          catBreedsDTO.map((catBreed) async {
+            if (catBreed.imageUrl != null) {
+              final imageUrl = await _fetchImageUrl(catBreed.imageUrl!);
+              return catBreed.copyWith(imageUrl: imageUrl);
+            }
+            return catBreed;
+          }).toList(),
+        );
+
+        return BaseDataDTO<List<CatBreedDTO>>(data: updatedCatBreedsDTO);
       }
 
       // Throws Exception when status code is not 200
@@ -61,5 +71,21 @@ class CatBreedServiceImpl implements CatBreedService {
         errorMessage: response.statusMessage,
       );
     });
+  }
+
+  /// Private method to get the image URL
+  Future<String?> _fetchImageUrl(String imageId) async {
+    final requestUri = Uri.https(
+      CatBreedServiceDataConst.api,
+      CatBreedServiceDataConst.getImageUrl(imageId),
+    );
+
+    final response = await _dio.getUri<Map<String, dynamic>>(requestUri);
+
+    if (response.statusCode == StatusCode.ok) {
+      return response.data?['url'] as String?;
+    }
+
+    return null;
   }
 }

@@ -91,6 +91,7 @@ class _CatBreedListPageState extends ConsumerState<CatBreedListPage> {
                     orElse: SizedBox.new,
                     data: (breeds) {
                       return ListView.builder(
+                        controller: _scrollController,
                         itemCount: breeds.length +
                             1, // Add 1 for the loading indicator
                         itemBuilder: (context, index) {

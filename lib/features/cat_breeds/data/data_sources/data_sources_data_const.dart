@@ -9,6 +9,9 @@ class CatBreedServiceDataConst {
   /// This constant represents the base URL for the Cat API.
   static String get api => 'api.thecatapi.com';
 
+  /// Builds the relative endpoint path to fetch the URL of a specific image.
+  static String getImageUrl(String imageId) => '/v1/images/$imageId';
+
   /// This constant represents the endpoint for retrieving
   /// the list of cat breeds.
   ///
