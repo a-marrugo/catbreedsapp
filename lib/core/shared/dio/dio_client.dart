@@ -1,6 +1,7 @@
 import 'package:catbreedsapp/core/shared/dio/dio_logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// This is the general Dio client to which we can add a custom base
 // /url and custom interceptors.
@@ -38,6 +39,9 @@ class DioClient {
 
   BaseOptions _configureDio(String contentType) => BaseOptions(
         contentType: contentType,
+        headers: {
+          'x-api-key': dotenv.env['API_KEY'],
+        },
       );
 
   /// Add the interceptors passed by parameters to the client and if
