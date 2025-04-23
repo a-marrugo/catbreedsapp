@@ -14,7 +14,8 @@ El proyecto sigue una **arquitectura limpia**, separando la lógica en capas bie
 
 Utiliza Riverpod para la gestión de estado y patrones modernos de desarrollo en Flutter.
 
-Incluye características como **lazy loading** para la carga eficiente de listas largas, **precarga y cacheo de imágenes** para mejorar el rendimiento y la experiencia de usuario, y animaciones suaves en la interfaz.  
+Incluye características como **lazy loading** para la carga eficiente de listas largas, **precarga y cacheo de imágenes** para mejorar el rendimiento y la experiencia de usuario, y animaciones suaves en la interfaz. Así como el manejo de estados para las diferentes etapas de la aplicación: loading, data, error.
+
 Se aprovechan buenas prácticas para asegurar pruebas unitarias, escalabilidad y mantenimiento de código.
 
 Además, se han abarcado los tests de las capas de dominio, data y application.
@@ -34,6 +35,14 @@ Antes de ejecutar la aplicación, asegúrate de tener instalado lo siguiente:
 - [Flutter](https://flutter.dev/docs/get-started/install) (Versión recomendada: 3.22.3)
 - [Dart](https://dart.dev/get-dart) (Tools • Dart 3.4.4 • DevTools 2.34.3)
 - Dispositivo físico o emulador configurado
+
+### Configuración
+
+0. Crea un archivo `.env` en la raíz del proyecto y agrega tu clave API:
+
+   ```sh
+   API_KEY=tu_clave_api_aqui
+   ```
 
 ### Instalación
 

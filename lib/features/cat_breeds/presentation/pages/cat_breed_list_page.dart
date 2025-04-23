@@ -5,7 +5,9 @@ import 'package:catbreedsapp/core/presentation/styles/app_palette.dart';
 import 'package:catbreedsapp/core/presentation/widgets/circular_progress_indicator_widget.dart';
 import 'package:catbreedsapp/core/presentation/widgets/text_button_widget.dart';
 import 'package:catbreedsapp/core/shared/constants/assets_image_constant.dart';
+import 'package:catbreedsapp/core/shared/extensions/build_context_extension.dart';
 import 'package:catbreedsapp/core/shared/l10n/l10n.dart';
+import 'package:catbreedsapp/core/shared/router/router_constant.dart';
 import 'package:catbreedsapp/features/cat_breeds/application/providers/providers.dart';
 import 'package:catbreedsapp/features/cat_breeds/domain/entities/cat_breed.dart';
 import 'package:catbreedsapp/features/cat_breeds/presentation/widgets/cat_breed_card.dart';
@@ -210,7 +212,16 @@ class _CatBreedList extends StatelessWidget {
       delegate: SliverChildBuilderDelegate(
         (context, index) {
           if (index < breeds.length) {
-            return CatBreedCard(catBreed: breeds[index]);
+            return CatBreedCard(
+              catBreed: breeds[index],
+              onTap: () {
+                context.router.navigate(
+                  context,
+                  navigationConstant: RouteConstants.catBreedDetailPage,
+                  arguments: breeds[index],
+                );
+              },
+            );
           } else {
             if (notifier.isLastPage == true) {
               return Center(child: Text(this.context.l10n.noMoreData));

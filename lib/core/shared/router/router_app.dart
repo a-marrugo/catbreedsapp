@@ -1,4 +1,8 @@
+// ignore_for_file: cast_nullable_to_non_nullable
+
 import 'package:catbreedsapp/core/shared/router/router_constant.dart';
+import 'package:catbreedsapp/features/cat_breeds/domain/entities/cat_breed.dart';
+import 'package:catbreedsapp/features/cat_breeds/presentation/pages/cat_breed_detail_page.dart';
 import 'package:catbreedsapp/features/cat_breeds/presentation/pages/cat_breed_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -14,21 +18,27 @@ class RouterApp {
     routes: [
       GoRoute(
         path: RouteConstants.catBreedListPage.path,
+        name: RouteConstants.catBreedListPage.path,
         builder: (context, state) => const CatBreedListPage(),
       ),
-      /*GoRoute(
-        path: RouteConstants.signUpPage.path,
-        pageBuilder: (context, state) => CustomTransitionPage(
-          key: state.pageKey,
-          child: const BasePage(child: SizedBox()),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: animation,
-              child: child,
-            );
-          },
-        ),
-      ),*/
+      GoRoute(
+        path: RouteConstants.catBreedDetailPage.path,
+        name: RouteConstants.catBreedDetailPage.path,
+        pageBuilder: (context, state) {
+          final catBreed = state.extra as CatBreed;
+          return CustomTransitionPage(
+            key: state.pageKey,
+            child: CatBreedDetailPage(catBreed: catBreed),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
+            },
+          );
+        },
+      ),
     ],
   );
 
@@ -39,16 +49,11 @@ class RouterApp {
   Future<void> navigate(
     BuildContext context, {
     required RouteConstants navigationConstant,
-    bool push = false,
+    Object? arguments,
   }) async {
-    if (push) {
-      await Future.microtask(
-        () => context.pushReplacement(navigationConstant.path),
-      );
-    } else {
-      await Future.microtask(
-        () => context.push(navigationConstant.path),
-      );
-    }
+    await context.push(
+      navigationConstant.path,
+      extra: arguments,
+    );
   }
 }

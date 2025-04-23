@@ -56,12 +56,7 @@ class BasePage extends StatelessWidget {
                     style: const TextStyle(color: Colors.black),
                   ),
                   actions: appBarActions,
-                  leading: leading != null
-                      ? Padding(
-                          padding: const EdgeInsets.only(left: 20, top: 20),
-                          child: leading,
-                        )
-                      : null,
+                  leading: leading,
                   backgroundColor: Colors.white,
                   elevation: 0,
                 )

@@ -1,12 +1,13 @@
 // ignore: depend_on_referenced_packages
 // ignore_for_file: public_member_api_docs
 // ignore: depend_on_referenced_packages
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:catbreedsapp/core/shared/constants/assets_image_constant.dart';
 import 'package:catbreedsapp/core/shared/l10n/l10n.dart';
 import 'package:catbreedsapp/features/cat_breeds/domain/entities/cat_breed.dart';
+import 'package:catbreedsapp/features/cat_breeds/presentation/widgets/cat_breed_description.dart';
+import 'package:catbreedsapp/features/cat_breeds/presentation/widgets/cat_breed_origin.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
+import 'cat_breed_image.dart';
 
 /// A widget that displays detailed information about a cat breed in a card format.
 ///
@@ -14,8 +15,13 @@ import 'package:shimmer/shimmer.dart';
 /// and interactive actions such as like, dislike, comment, share, and award.
 /// Designed to mimic a social media post style for engaging UI presentation.
 class CatBreedCard extends StatelessWidget {
-  const CatBreedCard({required this.catBreed, super.key});
+  const CatBreedCard({
+    required this.catBreed,
+    required this.onTap,
+    super.key,
+  });
   final CatBreed catBreed;
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +34,23 @@ class CatBreedCard extends StatelessWidget {
         children: [
           _buildHeader(context),
           const SizedBox(height: 6),
-          _buildOrigin(context),
+          CatBreedOrigin(origin: catBreed.origin),
           const SizedBox(height: 13),
-          _buildDescription(),
+          GestureDetector(
+            onTap: onTap,
+            child: CatBreedDescription(
+              description: catBreed.description,
+              maxLines: 2,
+            ),
+          ),
           const SizedBox(height: 13),
-          _buildImage(),
+          GestureDetector(
+            onTap: onTap,
+            child: CatBreedImage(
+              imageUrl: catBreed.imageUrl,
+              heroTag: 'cat-image-${catBreed.id}',
+            ),
+          ),
           _buildActions(context),
         ],
       ),
@@ -124,32 +142,6 @@ class CatBreedCard extends StatelessWidget {
             fontSize: 16,
             color: Colors.black,
           ),
-        ),
-      );
-
-  Widget _buildImage() => SizedBox(
-        height: 300,
-        width: double.infinity,
-        child: CachedNetworkImage(
-          imageUrl: catBreed.imageUrl ?? '',
-          placeholder: (context, url) => Shimmer.fromColors(
-            baseColor: Colors.grey[300]!,
-            highlightColor: Colors.grey[100]!,
-            child: Container(
-              color: Colors.grey[300],
-            ),
-          ),
-          errorWidget: (context, url, error) => Container(
-            color: Colors.grey[300],
-            child: Container(
-              margin: const EdgeInsets.all(50),
-              child: CircleAvatar(
-                radius: 19,
-                backgroundImage: AssetImage(AssetsImageConstant.icReddit),
-              ),
-            ),
-          ),
-          fit: BoxFit.contain,
         ),
       );
 

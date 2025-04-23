@@ -4,7 +4,10 @@
 /// each route with its respective path.
 enum RouteConstants {
   /// The home  screen of the app.
-  catBreedListPage(path: '/cat_breed_list_page');
+  catBreedListPage(path: '/cat_breed_list_page'),
+
+  /// The detail  screen of the cat breed.
+  catBreedDetailPage(path: '/cat_breed_detail');
 
   /// Constructor for defining a route with its corresponding path.
   const RouteConstants({required this.path});
