@@ -66,11 +66,13 @@ Antes de ejecutar la aplicación, asegúrate de tener instalado lo siguiente:
    flutter pub get
    ```
 
-   ## Preview
+## Preview
 
 <div align="center">
-  <img src='https://user-images.githubusercontent.com/29846058/131725937-4b630dff-0a8c-4014-8771-d7db96dfce00.jpeg' width='300' style="margin-right: 16px;"/>
-  <img src='https://user-images.githubusercontent.com/29846058/131726016-eef062b6-e95a-4fe7-a7fb-7f9617073f19.jpeg' width='300'/>
+  <img src="https://github.com/user-attachments/assets/443fd780-98cc-4774-b870-32d99714b477" width="220" style="margin: 8px;"/>
+  <img src="https://github.com/user-attachments/assets/21fd3ef7-fd4e-40de-8f78-9d215d904c96" width="220" style="margin: 8px;"/>
+  <img src="https://github.com/user-attachments/assets/b8737dcc-caa6-4b2d-b930-297f90e033a9" width="220" style="margin: 8px;"/>
+  <img src="https://github.com/user-attachments/assets/9b289683-c8e7-476c-b602-54f88fae2b5a" width="220" style="margin: 8px;"/>
 </div>
 
 ## More
