@@ -17,5 +17,5 @@ class CatBreedServiceDataConst {
   ///
   /// - Value: `/v1/breeds`
   static String getCatBreedEndPoint(String? query) =>
-      query != null ? '/v1/breeds/searchf' : '/v1/breeds';
+      query != null ? '/v1/breeds/search' : '/v1/breeds';
 }
