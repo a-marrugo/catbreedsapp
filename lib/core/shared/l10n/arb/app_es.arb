@@ -8,5 +8,14 @@
     "origin": "Origin",
     "share": "Share",
     "award": "Award",
-    "retry": "Retry"
+    "retry": "Retry",
+    "social": "Social",
+    "devName": "Angel Miguel",
+    "devDescription": "Dev mobile: Flutter(Dart)|Android(Kotlin-java)",
+    "aboutMe": "About me",
+    "devSocial": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    "contact":"Contact",
+    "devContact": "email: angelmarrugoplata@gmail.com",
+    "linkedIn": "LinkedIn",
+    "descriptionRole": "Talented Android and Fluter Developer with more than six years of enterprise in software and mobile development and a broad range of industries. Solid understanding of full mobile and Software Development Life Cycles (SDLC) and Agile methodologies. Dedicated to continuously developing, implementing, and adopting new technologies to maximize development efficiency and produce innovative applications."
 }

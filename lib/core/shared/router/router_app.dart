@@ -4,6 +4,7 @@ import 'package:catbreedsapp/core/shared/router/router_constant.dart';
 import 'package:catbreedsapp/features/cat_breeds/domain/entities/cat_breed.dart';
 import 'package:catbreedsapp/features/cat_breeds/presentation/pages/cat_breed_detail_page.dart';
 import 'package:catbreedsapp/features/cat_breeds/presentation/pages/cat_breed_list_page.dart';
+import 'package:catbreedsapp/features/social/presentation/pages/social_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -29,6 +30,23 @@ class RouterApp {
           return CustomTransitionPage(
             key: state.pageKey,
             child: CatBreedDetailPage(catBreed: catBreed),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
+            },
+          );
+        },
+      ),
+      GoRoute(
+        path: RouteConstants.socialPage.path,
+        name: RouteConstants.socialPage.path,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            key: state.pageKey,
+            child: const SocialPage(),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
               return FadeTransition(

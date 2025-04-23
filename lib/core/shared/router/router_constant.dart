@@ -6,6 +6,9 @@ enum RouteConstants {
   /// The home  screen of the app.
   catBreedListPage(path: '/cat_breed_list_page'),
 
+  /// The social  screen of the app.
+  socialPage(path: '/social_page'),
+
   /// The detail  screen of the cat breed.
   catBreedDetailPage(path: '/cat_breed_detail');
 

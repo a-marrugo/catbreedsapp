@@ -17,6 +17,7 @@ class BasePage extends StatelessWidget {
     this.backgroundColor,
     this.isLoading = false,
     this.loadingText,
+    this.floatingActionButton,
   });
 
   /// The main content widget of the page.
@@ -43,6 +44,9 @@ class BasePage extends StatelessWidget {
   /// Text to display when in a loading state.
   final String? loadingText;
 
+  /// A button displayed floating above body, in the bottom right corner.
+  final Widget? floatingActionButton;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -63,6 +67,7 @@ class BasePage extends StatelessWidget {
               : null,
           body: child,
           bottomNavigationBar: bottomNavigationBar,
+          floatingActionButton: floatingActionButton,
         ),
         if (isLoading) _buildLoadingOverlay(),
       ],

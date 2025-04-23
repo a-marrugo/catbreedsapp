@@ -96,6 +96,23 @@ class _CatBreedListPageState extends ConsumerState<CatBreedListPage> {
     return BasePage(
       appBarTitle: context.l10n.appName,
       backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.router.navigate(
+            context,
+            navigationConstant: RouteConstants.socialPage,
+          );
+        },
+        backgroundColor: Colors.transparent,
+        child: ClipOval(
+          child: Image.asset(
+            AssetsImageConstant.icReddit,
+            width: 65,
+            height: 65,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
       child: SafeArea(
         child: CustomScrollView(
           controller: _scrollController,
