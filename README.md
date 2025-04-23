@@ -68,10 +68,7 @@ Antes de ejecutar la aplicación, asegúrate de tener instalado lo siguiente:
    flutter pub get
    ```
 
-## Preview![WhatsApp Image Apr 23 2025]()
-![WhatsApp Image Apr 23 2025 (1)]()
-![WhatsApp Image Apr 23 2025 (2)]()
-![WhatsApp Image Apr 23 2025 (3)]()
+## Preview
 
 
 <div align="center">
