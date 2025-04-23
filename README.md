@@ -68,24 +68,28 @@ Antes de ejecutar la aplicación, asegúrate de tener instalado lo siguiente:
    flutter pub get
    ```
 
-## Preview
+## Preview![WhatsApp Image Apr 23 2025]()
+![WhatsApp Image Apr 23 2025 (1)]()
+![WhatsApp Image Apr 23 2025 (2)]()
+![WhatsApp Image Apr 23 2025 (3)]()
+
 
 <div align="center">
   <table>
     <tr>
       <td>
-        <img src="https://github.com/user-attachments/assets/443fd780-98cc-4774-b870-32d99714b477" width="220" style="margin: 8px;"/>
+        <img src="https://github.com/user-attachments/assets/32927c11-fe41-491b-9b84-4084ca21c578" width="220" style="margin: 8px;"/>
       </td>
       <td>
-        <img src="https://github.com/user-attachments/assets/21fd3ef7-fd4e-40de-8f78-9d215d904c96" width="220" style="margin: 8px;"/>
+        <img src="https://github.com/user-attachments/assets/58ae5ead-2c03-4c1b-a786-7da3ab47e3fd" width="220" style="margin: 8px;"/>
       </td>
     </tr>
     <tr>
       <td>
-        <img src="https://github.com/user-attachments/assets/b8737dcc-caa6-4b2d-b930-297f90e033a9" width="220" style="margin: 8px;"/>
+        <img src="https://github.com/user-attachments/assets/899d291c-ac56-453e-94d3-b0831a698bb1" width="220" style="margin: 8px;"/>
       </td>
       <td>
-        <img src="https://github.com/user-attachments/assets/9b289683-c8e7-476c-b602-54f88fae2b5a" width="220" style="margin: 8px;"/>
+        <img src="https://github.com/user-attachments/assets/8091353c-4115-4a9b-9692-3c1a473bd2d2" width="220" style="margin: 8px;"/>
       </td>
     </tr>
   </table>
