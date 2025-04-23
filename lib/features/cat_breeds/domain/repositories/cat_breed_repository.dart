@@ -14,5 +14,6 @@ abstract class CatBreedRepository {
   Future<BaseData<List<CatBreed>>> getCatBreeds({
     required int page,
     int? limit,
+    String? query,
   });
 }

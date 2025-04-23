@@ -16,6 +16,7 @@ abstract class CatBreedService {
   Future<BaseDataDTO<List<CatBreedDTO>>> getCatBreeds({
     required int page,
     int? limit,
+    String? query,
   });
 }
 
@@ -32,15 +33,17 @@ class CatBreedServiceImpl implements CatBreedService {
   Future<BaseDataDTO<List<CatBreedDTO>>> getCatBreeds({
     required int page,
     int? limit,
+    String? query,
   }) async {
     return BaseDataSource<BaseDataDTO<List<CatBreedDTO>>>()
         .serverRequest(() async {
       final requestUri = Uri.https(
         CatBreedServiceDataConst.api,
-        CatBreedServiceDataConst.getCatBreedEndPoint,
+        CatBreedServiceDataConst.getCatBreedEndPoint(query),
         {
           'page': page.toString(),
           'limit': (limit ?? 10).toString(),
+          'q': query,
         },
       );
 

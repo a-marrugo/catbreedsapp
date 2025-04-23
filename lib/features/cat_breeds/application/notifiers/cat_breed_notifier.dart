@@ -39,6 +39,7 @@ class CatBreedsNotifier extends AsyncNotifier<List<CatBreed>> {
   /// - Adds the fetched data to `_breeds`.
   /// - Sets `_isLastPage` to `true` if fewer items than `_limit` are returned.
   Future<List<CatBreed>> _fetchInitial() async {
+    state = const AsyncLoading();
     final result = await _getUserUseCase.execute(
       ParamsGetUserUseCase(
         page: _page,
@@ -83,6 +84,32 @@ class CatBreedsNotifier extends AsyncNotifier<List<CatBreed>> {
       state = AsyncError(e, StackTrace.current);
     } finally {
       _isLoadingMore = false; // Ensure loading state is reset
+    }
+  }
+
+  /// Searches cat breeds by a query string.
+  ///
+  /// Calls the use case with the query and updates the state with the results.
+  Future<void> search(String query) async {
+    state = const AsyncLoading();
+    _page = 0;
+    _isLastPage = false;
+    _breeds.clear();
+
+    try {
+      final result = await _getUserUseCase.execute(
+        ParamsGetUserUseCase(
+          page: _page,
+          limit: _limit,
+          query: query.isEmpty ? null : query,
+        ),
+      );
+      final data = result.data;
+      _breeds.addAll(data);
+      if (data.length < _limit) _isLastPage = true;
+      state = AsyncData(_breeds);
+    } catch (e) {
+      state = AsyncError(e, StackTrace.current);
     }
   }
 }

@@ -15,13 +15,21 @@ class GetUserUseCase
 
   @override
   Future<BaseData<List<CatBreed>>> execute(ParamsGetUserUseCase params) =>
-      _catBreedRepository.getCatBreeds(page: params.page, limit: params.limit);
+      _catBreedRepository.getCatBreeds(
+        page: params.page,
+        limit: params.limit,
+        query: params.query,
+      );
 }
 
 /// Class params for [GetUserUseCase]
 class ParamsGetUserUseCase {
   /// constructor
-  ParamsGetUserUseCase({required this.page, required this.limit});
+  ParamsGetUserUseCase({
+    required this.page,
+    required this.limit,
+    this.query,
+  });
 
   /// The first value (`int`) is the page number to fetch.
   final int page;
@@ -29,4 +37,7 @@ class ParamsGetUserUseCase {
   /// The second value (`int`) is the limit, which specifies
   /// the number of items per page.
   final int limit;
+
+  /// Query string for updated list
+  final String? query;
 }

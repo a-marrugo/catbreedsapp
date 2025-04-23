@@ -1,5 +1,12 @@
 {
     "@@locale": "es",
-    "home": "Inicio",
-    "appName": "Cat Breeds"
+    "home": "Home",
+    "appName": "Cat Breeds",
+    "searchCatBreeds": "Search cat breeds...",
+    "noMoreData": "No more data",
+    "defaultPosted": "Posted by u/Known_Marzipan_2629 • 15H • v.redd.it",
+    "origin": "Origin",
+    "share": "Share",
+    "award": "Award",
+    "retry": "Retry"
 }

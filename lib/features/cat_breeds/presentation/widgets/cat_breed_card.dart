@@ -1,65 +1,254 @@
-import 'dart:math';
-
+// ignore: depend_on_referenced_packages
+// ignore_for_file: public_member_api_docs
+// ignore: depend_on_referenced_packages
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:catbreedsapp/core/shared/constants/assets_image_constant.dart';
+import 'package:catbreedsapp/core/shared/l10n/l10n.dart';
 import 'package:catbreedsapp/features/cat_breeds/domain/entities/cat_breed.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-/// This widget represents a card that displays basic information about a cat breed.
-/// It adjusts its height dynamically based on a random value and shows a shimmer effect
-/// while the image is loading.
+/// A widget that displays detailed information about a cat breed in a card format.
+///
+/// Shows the breed's name, a sample post description, awards, an image,
+/// and interactive actions such as like, dislike, comment, share, and award.
+/// Designed to mimic a social media post style for engaging UI presentation.
 class CatBreedCard extends StatelessWidget {
-  /// Constructor
   const CatBreedCard({required this.catBreed, super.key});
-
   final CatBreed catBreed;
 
   @override
   Widget build(BuildContext context) {
-    final randomHeight = 180;
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      elevation: 0,
+    return Container(
+      padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
+      margin: const EdgeInsets.only(bottom: 10),
+      color: Colors.white,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Imagen con altura aleatoria y efecto shimmer como placeholder
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            child: Container(
-              height: randomHeight.toDouble(),
-              child: CachedNetworkImage(
-                imageUrl: catBreed.imageUrl ?? '',
-                placeholder: (context, url) => Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[100]!,
-                  child: Container(
-                    color: Colors.grey[300],
-                  ),
-                ),
-                errorWidget: (context, url, error) => Container(
-                  color: Colors.grey[300],
-                  child: const Icon(Icons.error, color: Colors.red),
-                ),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          // Contenido de texto
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Text(
-              catBreed.name,
-              style: Theme.of(context).textTheme.headlineSmall,
-              textAlign: TextAlign.center,
-            ),
-          ),
+          _buildHeader(context),
+          const SizedBox(height: 6),
+          _buildOrigin(context),
+          const SizedBox(height: 13),
+          _buildDescription(),
+          const SizedBox(height: 13),
+          _buildImage(),
+          _buildActions(context),
         ],
       ),
     );
   }
+
+  Widget _buildHeader(BuildContext context) => Row(
+        children: [
+          CircleAvatar(
+            radius: 19,
+            backgroundImage: AssetImage(AssetsImageConstant.icReddit),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'r/${catBreed.name}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black,
+                  ),
+                ),
+                Text(
+                  context.l10n.defaultPosted,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w200,
+                    fontSize: 12,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 32,
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFF4500),
+                borderRadius: BorderRadius.circular(18),
+              ),
+              child: const Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          const Icon(
+            Icons.more_vert_outlined,
+            size: 30,
+          )
+        ],
+      );
+
+  Widget _buildOrigin(BuildContext context) => Row(
+        children: [
+          Image.asset(
+            AssetsImageConstant.premiumBonus,
+            width: 16,
+            height: 16,
+          ),
+          const SizedBox(width: 8),
+          Visibility(
+            visible: catBreed.origin != null,
+            child: Text(
+              '${context.l10n.origin}: ${catBreed.origin}',
+              style: const TextStyle(
+                fontWeight: FontWeight.w300,
+                fontSize: 12,
+                color: Colors.black,
+              ),
+            ),
+          )
+        ],
+      );
+
+  Widget _buildDescription() => Visibility(
+        visible: catBreed.description != null,
+        child: Text(
+          catBreed.description ?? '',
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(
+            fontWeight: FontWeight.w700,
+            fontSize: 16,
+            color: Colors.black,
+          ),
+        ),
+      );
+
+  Widget _buildImage() => SizedBox(
+        height: 300,
+        width: double.infinity,
+        child: CachedNetworkImage(
+          imageUrl: catBreed.imageUrl ?? '',
+          placeholder: (context, url) => Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: Container(
+              color: Colors.grey[300],
+            ),
+          ),
+          errorWidget: (context, url, error) => Container(
+            color: Colors.grey[300],
+            child: Container(
+              margin: const EdgeInsets.all(50),
+              child: CircleAvatar(
+                radius: 19,
+                backgroundImage: AssetImage(AssetsImageConstant.icReddit),
+              ),
+            ),
+          ),
+          fit: BoxFit.contain,
+        ),
+      );
+
+  Widget _buildActions(BuildContext context) => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            children: [
+              TextButton.icon(
+                onPressed: () {},
+                icon: const Icon(Icons.star_border_outlined, size: 24),
+                label: const Text(
+                  '90',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: Colors.black,
+                  ),
+                ),
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  minimumSize: const Size(0, 32),
+                ),
+              ),
+              TextButton.icon(
+                onPressed: () {},
+                icon: const Icon(Icons.heart_broken_outlined, size: 24),
+                label: const Text(
+                  '3',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: Colors.black,
+                  ),
+                ),
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  minimumSize: const Size(0, 32),
+                ),
+              ),
+            ],
+          ),
+          Flexible(
+            child: TextButton.icon(
+              onPressed: () {},
+              icon: const Icon(Icons.comment_outlined, size: 24),
+              label: const Text(
+                '2.9k',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.black,
+                ),
+              ),
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                minimumSize: const Size(0, 32),
+              ),
+            ),
+          ),
+          Flexible(
+            child: TextButton.icon(
+              onPressed: () {},
+              icon: const Icon(Icons.share_outlined, size: 24),
+              label: Text(
+                context.l10n.share,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.black,
+                ),
+              ),
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                minimumSize: const Size(0, 32),
+              ),
+            ),
+          ),
+          Flexible(
+            child: TextButton.icon(
+              onPressed: () {},
+              icon: const Icon(Icons.monetization_on_outlined, size: 24),
+              label: Text(
+                context.l10n.award,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.black,
+                ),
+              ),
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                minimumSize: const Size(0, 32),
+              ),
+            ),
+          ),
+        ],
+      );
 }

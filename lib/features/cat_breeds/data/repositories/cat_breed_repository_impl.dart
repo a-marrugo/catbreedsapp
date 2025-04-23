@@ -17,9 +17,13 @@ class CatBreedRepositoryImpl extends CatBreedRepository {
   Future<BaseData<List<CatBreed>>> getCatBreeds({
     required int page,
     int? limit,
+    String? query,
   }) async {
-    final response =
-        await _catBreedService.getCatBreeds(page: page, limit: limit);
+    final response = await _catBreedService.getCatBreeds(
+      page: page,
+      limit: limit,
+      query: query,
+    );
     return BaseData(data: response.data.toDomain);
   }
 }
