@@ -14,8 +14,15 @@ El proyecto sigue una **arquitectura limpia**, separando la lógica en capas bie
 
 Utiliza Riverpod para la gestión de estado y patrones modernos de desarrollo en Flutter.
 
-Incluye características como **lazy loading** para la carga eficiente de listas largas, **precarga y cacheo de imágenes** para mejorar el rendimiento y la experiencia de usuario, y animaciones suaves en la interfaz.
-Se aprovechan buenas prácticas para asegurar pruebas unitarias, escalabilidad y mantenimiento de código.
+Incluye características como **lazy loading** para la carga eficiente de listas largas, **precarga y cacheo de imágenes** para mejorar el rendimiento y la experiencia de usuario, y animaciones suaves en la interfaz.  
+Se aprovechan buenas prácticas para asegurar pruebas unitarias, escalabilidad y mantenimiento de código.  
+Además, se han abarcado los tests de las capas de dominio, data y application.
+
+Incluye prubas unitarias de capas de dominio, data y applicación. También de UI.
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/300b142a-78b8-4403-b737-090caca5b499" width="500"/>
+</div>
 
 ## Getting Started
 
